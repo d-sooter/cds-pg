@@ -1,0 +1,78 @@
+{
+  "name": "cds-pg",
+  "version": "0.0.6",
+  "description": "PostgreSQL adapter for SAP CDS (CAP)",
+  "main": "index.js",
+  "scripts": {
+    "test": "run-s test:pg:up jest test:pg:down",
+    "jest": "jest",
+    "test:pg:up-nobg": "docker-compose -f __tests__/__assets__/cap-proj/stack.yml up",
+    "test:pg:up": "docker-compose -f __tests__/__assets__/cap-proj/stack.yml up -d",
+    "test:pg:down": "docker-compose -f __tests__/__assets__/cap-proj/stack.yml down",
+    "test:as-sqlite": "cd __tests__/__assets__/cap-proj && cds deploy -2 sqlite::memory: --no-save && cds serve all --in-memory",
+    "lint": "prettier -c . && eslint '*.{js,ts,tsx}'",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapmentors/cds-pg.git"
+  },
+  "keywords": [
+    "sap",
+    "cap",
+    "cds",
+    "PostgreSQL",
+    "postgres"
+  ],
+  "author": "SAP Mentors & Friends",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sapmentors/cds-pg/issues"
+  },
+  "homepage": "https://github.com/sapmentors/cds-pg#readme",
+  "dependencies": {
+    "@sap/cds": "^4.1.9",
+    "pg": "^8.3.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/jest": "^26.0.14",
+    "eslint": "^7.9.0",
+    "eslint-plugin-jest": "^24.0.2",
+    "express": "^4.17.1",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "lint-staged": "^10.4.0",
+    "npm-run-all": "^4.1.5",
+    "sqlite3": "^5.0.0",
+    "standard-version": "^9.0.0",
+    "supertest": "^4.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/__tests__/__assets__/"
+    ]
+  },
+  "optionalDependencies": {
+    "prettier": "2.1.2"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 120,
+    "arrowParens": "always",
+    "trailingComma": "es5",
+    "singleQuote": true
+  }
+}
